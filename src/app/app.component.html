@@ -1,20 +1,82 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!
-  </h1>
-  <img width="300" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
 
+<div class = "container" >
+  <h1>
+    {{title | uppercase }}
+  </h1>
+
+  <hr>
+
+  <div class="row">
+            
+    <div class="col-sm-12">
+        <div>
+            <h2>Liste des contacts</h2>
+            <button (click) = "onNewContact()" class="btn btn-default">Nouveau contact</button>    
+        </div>
+
+        <div *ngIf = "showForm">
+            <hr>
+            <form class="form-vertical" name = "newContactForm">
+                <div class="row">
+                  <div class="col-md-3">
+                      <input type="text" class="form-control" name="firstname" placeholder="Entrer le prenom ..." [(ngModel)] = "contact.firstname">
+                  </div>
+                  <div class="col-md-3">
+                      <input type="text" class="form-control" name="nom" placeholder="Entrer le nom ..." [(ngModel)] = "contact.lastname">
+                  </div>
+                  
+                  <div class="col-md-3">
+                      <input type="text" class="form-control" name="matricule" placeholder="Entrer le téléphone ..." [(ngModel)] = "contact.phone">
+                  </div>
+                  
+                  <button (click) = "onAdd()" class="btn btn-primary">Ajouter</button>
+                  <button (click) = "onCloseNewContact()" class="btn btn-danger">Fermer</button>
+                  
+                </div>
+              </form>
+        </div>
+
+        <hr>
+
+        <!--
+        <input type="text" [(ngModel)] = "critarion" placeholder="Filter la liste ...">
+        -->
+        
+        <form class="form-vertical" name = "filterContacts">
+            <div class="row">
+              <div class="col-md-6">
+                  <input type="text" class="form-control" name="filter" placeholder="Filter contacts ..." [(ngModel)] = "critarion" >
+              </div>
+            </div>
+        </form>
+        
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Firstname</th>
+              <th>Lastname</th>
+              <th>Phone</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor = "let contact of contacts | filter: critarion; let index=index; let odd=odd">
+              
+              <td><strong>{{index+1}}</strong></td>
+  
+              <td>{{contact.firstname}}</td>
+              
+              <td>{{contact.lastname | uppercase}}</td>
+  
+              <td>{{contact.phone}}</td>
+  
+              <td>
+                <button (click) = "onDelete(contact)" class="btn btn-danger">Supprimer</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+</div>
